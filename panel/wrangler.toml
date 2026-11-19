@@ -16,7 +16,7 @@ DAL = "main"
 [[d1_databases]]
 binding = "DB"
 database_name = "maksat114-panel"
-database_id = "BURAYA_D1_ID"
+database_id = "67063f73-c2a2-4b00-ab83-8174667d5979"
 
 [observability]
 enabled = true
