@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maksat 114 · Bağlantılar</title>
 <meta name="description" content="Maksat 114 İlim ve Kültür Derneği: sosyal medya hesaplarımız, konumumuz ve son videomuz.">
-<meta name="theme-color" content="#F8F8F6">
+<meta name="theme-color" content="#111112">
 <meta property="og:title" content="Maksat | 114">
 <meta property="og:description" content="Hesaplarımız, konumumuz ve son videomuz tek sayfada.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111112'/%3E%3Crect x='14.5' y='6' width='3' height='20' fill='%23ED1C24'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --zemin: #F8F8F6;
-    --panel: #EEEEEC;
-    --panel-2: #E5E5E2;
-    --cizgi: rgba(17, 17, 18, .07);
-    --metin: #111112;
-    --soluk: rgba(17, 17, 18, .58);
-    --kirmizi-dugme: #C9121A;
+    --zemin: #111112;
+    --panel: #1C1C1E;
+    --panel-2: #242427;
+    --cizgi: rgba(248, 248, 246, .08);
+    --metin: #F8F8F6;
+    --soluk: rgba(248, 248, 246, .62);
     --kirmizi: #ED1C24;
     --kirmizi-yazi: #FF4D55;
     --yuvarlak: 18px;
@@ -39,26 +39,13 @@
   .sayfa {
     max-width: 480px;
     margin: 0 auto;
-    padding: 0 16px max(32px, env(safe-area-inset-bottom));
+    padding: max(36px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
   }
 
   /* Başlık */
-  .bas { position: relative; margin: 0 -16px; text-align: center; }
-  .kapak {
-    aspect-ratio: 840 / 720; background: url(img/bina.jpg) center top / cover no-repeat;
-    -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
-            mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
-  }
-  .bas-yazi { position: relative; margin-top: -86px; padding: 0 16px 6px; }
-  .bas h1 {
-    font-size: clamp(28px, 8.4vw, 38px); font-weight: 700; letter-spacing: -.03em; line-height: 1.1;
-    display: inline-flex; align-items: center; gap: 8px; 
-  }
-  .onay { width: .72em; height: .72em; flex: none; }
-  @media (min-width: 512px) {
-    .bas { margin: 16px 0 0; }
-    .kapak { border-radius: 28px 28px 0 0; }
-  }
+  .bas { text-align: center; padding: 8px 0 28px; }
+  .bas img { width: 200px; max-width: 62%; height: auto; display: block; margin: 0 auto 18px; }
+  .bas h1 { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
   .gizli { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
   .bas h1 b { color: var(--kirmizi); font-weight: 700; padding: 0 .15em; }
   .bas p { color: var(--soluk); font-size: 14.5px; margin-top: 2px; }
@@ -79,7 +66,7 @@
     padding: 14px 14px; min-height: 64px; min-width: 0;
     transition: transform .15s ease, background .15s ease, border-color .15s ease;
   }
-  .hesap:hover { background: var(--panel-2); border-color: rgba(17, 17, 18, .18); }
+  .hesap:hover { background: var(--panel-2); border-color: rgba(237, 28, 36, .45); }
   .hesap:active { transform: scale(.97); }
   .hesap svg { width: 26px; height: 26px; flex: none; }
   .hesap span { display: flex; flex-direction: column; min-width: 0; }
@@ -91,9 +78,9 @@
     background: var(--panel); border: 1px solid var(--cizgi); border-radius: var(--yuvarlak);
     overflow: hidden;
   }
-  .cerceve { position: relative; background: var(--panel-2); }
+  .cerceve { position: relative; background: #0b0b0c; }
   .cerceve iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
-  .cerceve.harita { aspect-ratio: 16 / 10; }
+  .cerceve.harita { aspect-ratio: 16 / 10; isolation: isolate; }
   .cerceve.video { aspect-ratio: 16 / 9; }
   .cerceve .yedek {
     position: absolute; inset: 0; display: grid; place-items: center;
@@ -106,12 +93,12 @@
   .dugme {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     margin-top: 14px; padding: 13px 16px; border-radius: 999px;
-    background: var(--kirmizi-dugme); color: #fff; font-weight: 600; font-size: 15px;
+    background: var(--kirmizi); color: #fff; font-weight: 600; font-size: 15px;
     transition: filter .15s ease, transform .15s ease;
   }
   .dugme:hover { filter: brightness(1.08); }
   .dugme:active { transform: scale(.98); }
-  .dugme.ikincil { background: transparent; border: 1px solid rgba(17,17,18,.2); color: var(--metin); }
+  .dugme.ikincil { background: transparent; border: 1px solid rgba(248,248,246,.22); color: var(--metin); }
   .dugme svg { width: 18px; height: 18px; }
 
   /* Hoca kartı */
@@ -128,7 +115,7 @@
   }
   .rozet img {
     width: 100%; height: 100%; border-radius: 50%; display: block; object-fit: cover;
-    border: 2px solid var(--zemin); background: var(--panel);
+    border: 2px solid var(--panel); background: var(--panel-2);
   }
   .hoca div { flex: 1; min-width: 0; }
   .hoca strong { display: block; font-size: 16px; font-weight: 600; }
@@ -138,7 +125,41 @@
     font-weight: 600; font-size: 14px;
   }
 
-  footer { text-align: center; color: var(--soluk); font-size: 12px; margin-top: 36px; padding-bottom: max(32px, env(safe-area-inset-bottom)); }
+
+  /* Işıklı harita */
+  #harita { position: absolute; inset: 0; background: #0b0b0c; }
+  .leaflet-container { font-family: inherit; background: #0b0b0c; }
+  .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) grayscale(.85) brightness(.82) contrast(1.15); }
+  .leaflet-control-attribution { background: rgba(17,17,18,.7) !important; color: rgba(248,248,246,.5) !important; font-size: 9px !important; }
+  .leaflet-control-attribution a { color: rgba(248,248,246,.7) !important; }
+  .cerceve.harita::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 500;
+    background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(17,17,18,.55) 100%);
+  }
+  .isaret { position: relative; width: 0; height: 0; }
+  .isaret i { position: absolute; left: 0; top: 0; border-radius: 50%; transform: translate(-50%, -50%); }
+  .isaret .cekirdek {
+    width: 16px; height: 16px; background: var(--kirmizi); border: 3px solid #fff;
+    box-shadow: 0 0 12px 4px rgba(237,28,36,.9), 0 0 36px 12px rgba(237,28,36,.45);
+    animation: nabiz-cekirdek 1.6s ease-in-out infinite;
+  }
+  .isaret .halka { width: 18px; height: 18px; border: 2px solid var(--kirmizi); background: rgba(237,28,36,.18); animation: halka 2.4s cubic-bezier(.2,.6,.3,1) infinite; }
+  .isaret .halka:nth-child(2) { animation-delay: .8s; }
+  .isaret .halka:nth-child(3) { animation-delay: 1.6s; }
+  @keyframes halka { from { width: 18px; height: 18px; opacity: .95; } to { width: 150px; height: 150px; opacity: 0; } }
+  @keyframes nabiz-cekirdek {
+    0%, 100% { box-shadow: 0 0 10px 3px rgba(237,28,36,.85), 0 0 28px 8px rgba(237,28,36,.35); }
+    50% { box-shadow: 0 0 18px 7px rgba(237,28,36,1), 0 0 56px 20px rgba(237,28,36,.55); }
+  }
+  .harita-etiket {
+    position: absolute; left: 12px; top: 12px; z-index: 600; display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 12px; border-radius: 999px; background: rgba(17,17,18,.78); border: 1px solid rgba(248,248,246,.12);
+    font-size: 12.5px; font-weight: 600; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+  .canli { width: 8px; height: 8px; border-radius: 50%; background: var(--kirmizi); box-shadow: 0 0 8px var(--kirmizi); animation: yanip 1.2s steps(2, jump-none) infinite; }
+  @keyframes yanip { 50% { opacity: .25; } }
+  @media (prefers-reduced-motion: reduce) { .isaret .halka, .isaret .cekirdek, .canli { animation: none; } }
+  footer { text-align: center; color: rgba(248,248,246,.38); font-size: 12px; margin-top: 36px; }
 
   /* Açılış */
   @media (prefers-reduced-motion: no-preference) {
@@ -159,18 +180,16 @@
 <main class="sayfa">
 
   <header class="bas">
-    <div class="kapak" role="img" aria-label="Bursa'daki Maksat 114 binası"></div>
-    <div class="bas-yazi">
-      <h1>@maksat114bursa<svg class="onay" viewBox="0 0 24 24" aria-label="Resmî hesap"><path d="M12 1.5l2.6 1.9 3.2-.1 1 3 2.6 1.9-1 3.1 1 3-2.6 1.9-1 3.1-3.2-.1L12 22.5l-2.6-1.9-3.2.1-1-3.1-2.6-1.9 1-3-1-3.1 2.6-1.9 1-3 3.2.1z" fill="#ED1C24"/><path d="M7.8 12.2l2.8 2.8 5.6-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
-      <p>Maksat 114 İlim ve Kültür Derneği · Bursa</p>
-    </div>
+    <img src="img/logo-beyaz.png" width="620" height="142" alt="Maksat 114">
+    <h1 class="gizli">Maksat 114</h1>
+    <p>İlim ve Kültür Derneği · Bursa</p>
   </header>
 
   <section class="bolum" aria-labelledby="b-hesap">
     <h2 id="b-hesap">Hesaplarımız</h2>
     <div class="hesaplar">
       <a class="hesap" href="https://www.instagram.com/maksat114bursa" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#111112" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#111112" stroke="none"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F8F8F6" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#F8F8F6" stroke="none"/></svg>
         <span><strong>Instagram</strong><small>@maksat114bursa</small></span>
       </a>
       <a class="hesap" href="https://www.youtube.com/@maksat114bursa" target="_blank" rel="noopener">
@@ -182,7 +201,7 @@
         <span><strong>WhatsApp</strong><small>Kanalımız</small></span>
       </a>
       <a class="hesap" href="https://www.tiktok.com/@maksat114bursa" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M14.5 3h3c.2 1.9 1.6 3.4 3.5 3.6v3a7.3 7.3 0 0 1-3.5-1.1v6.4a5.9 5.9 0 1 1-5.9-5.9h.6v3.1a2.8 2.8 0 1 0 2.3 2.8z" fill="#111112"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M14.5 3h3c.2 1.9 1.6 3.4 3.5 3.6v3a7.3 7.3 0 0 1-3.5-1.1v6.4a5.9 5.9 0 1 1-5.9-5.9h.6v3.1a2.8 2.8 0 1 0 2.3 2.8z" fill="#F8F8F6"/></svg>
         <span><strong>TikTok</strong><small>@maksat114bursa</small></span>
       </a>
       <a class="hesap" href="https://t.me/maksat114bursa" target="_blank" rel="noopener">
@@ -201,9 +220,8 @@
     <div class="kart">
       <div class="cerceve harita">
         <div class="yedek">Harita yükleniyor…</div>
-        <iframe loading="lazy" title="Maksat 114 konumu"
-          src="https://maps.google.com/maps?q=Alt%C4%B1n%C5%9Fehir%20Mahallesi%2C%20204.%20Sk.%20No%3A1%2C%2016120%20Nil%C3%BCfer%2FBursa&z=16&output=embed"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div id="harita" aria-label="Maksat 114 konumu haritası"></div>
+        <div class="harita-etiket"><span class="canli"></span>Maksat 114 · Nilüfer</div>
       </div>
       <div class="kart-alt">
         <p class="adres">Altınşehir Mahallesi, 204. Sk. No:1<small>16120 Nilüfer / Bursa</small></p>
@@ -241,5 +259,26 @@
 
   <footer>© Maksat 114 İlim ve Kültür Derneği</footer>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+  if (!window.L) return;
+  var konum = [40.21814, 28.93406];
+  var dokunmatik = matchMedia('(pointer: coarse)').matches;
+  var h = L.map('harita', {
+    center: konum, zoom: 16, zoomControl: false, scrollWheelZoom: false,
+    dragging: !dokunmatik, tap: false, attributionControl: true
+  });
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+  }).addTo(h);
+  L.marker(konum, {
+    icon: L.divIcon({ className: '', html: '<div class="isaret"><i class="halka"></i><i class="halka"></i><i class="halka"></i><i class="cekirdek"></i></div>', iconSize: [0, 0] }),
+    keyboard: false, interactive: false
+  }).addTo(h);
+  h.attributionControl.setPrefix(false);
+})();
+</script>
 </body>
 </html>
