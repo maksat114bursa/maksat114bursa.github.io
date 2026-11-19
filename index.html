@@ -234,7 +234,7 @@
         <div class="yedek">Harita yükleniyor…</div>
         <div id="harita" aria-label="Maksat 114 konumu haritası"></div>
         <div class="harita-etiket"><span class="canli"></span>Maksat 114 · Nilüfer</div>
-        <div class="harita-metro"><b>M</b>Altınşehir Metrosu <em>· 6 dk yürüme</em></div>
+        <div class="harita-metro"><b>M</b>Altınşehir Metrosu <em>· 4 dk yürüme</em></div>
       </div>
       <div class="kart-alt">
         <p class="adres">Altınşehir Mahallesi, 204. Sk. No:1<small>16120 Nilüfer / Bursa</small></p>
@@ -287,7 +287,7 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
   }).addTo(h);
   var metro = [40.2148075, 28.934079];
-  var yol = [[40.21655,28.934921],[40.216318,28.935049],[40.21636,28.934391],[40.216417,28.933652],[40.216426,28.9335],[40.216439,28.933268],[40.216448,28.933098],[40.216376,28.9332],[40.21637,28.933268],[40.2163,28.933322],[40.216267,28.933347],[40.216112,28.933489],[40.215785,28.933738],[40.21552,28.933908],[40.215427,28.933962],[40.215334,28.934064],[40.21531,28.934066],[40.214974,28.934235],[40.214565,28.934441],[40.21463,28.934474],[40.214672,28.934448],[40.214688,28.934439],[40.214804,28.934377],[40.214873,28.934341],[40.214818,28.934125],[40.214805,28.93408]];
+  var yol = [[40.21655,28.934921],[40.216318,28.935049],[40.21636,28.934391],[40.216284,28.934449],[40.216077,28.934417],[40.215717,28.934366],[40.214974,28.934235],[40.214873,28.934341],[40.214804,28.934377]];
   L.polyline(yol, { color: '#fff', weight: 7, opacity: .9, lineCap: 'round', lineJoin: 'round', interactive: false }).addTo(h);
   L.polyline(yol, { color: '#ED1C24', weight: 4, dashArray: '2 9', lineCap: 'round', className: 'akan-yol', interactive: false }).addTo(h);
   L.marker(metro, {
@@ -323,7 +323,7 @@
       requestAnimationFrame(adim);
     })(performance.now());
   } else { yuruyen.remove(); }
-  h.fitBounds(L.latLngBounds(yol), { paddingTopLeft: [30, 62], paddingBottomRight: [30, 62], maxZoom: 17 });
+  h.fitBounds(L.latLngBounds(yol), { paddingTopLeft: [30, 62], paddingBottomRight: [30, 78], maxZoom: 17 });
   L.marker(konum, {
     icon: L.divIcon({ className: '', html: '<div class="isaret"><i class="halka"></i><i class="halka"></i><i class="cekirdek"></i></div>', iconSize: [0, 0] }),
     keyboard: false, interactive: false
