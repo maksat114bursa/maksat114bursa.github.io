@@ -127,38 +127,31 @@
 
 
   /* Işıklı harita */
-  #harita { position: absolute; inset: 0; background: #0b0b0c; }
-  .leaflet-container { font-family: inherit; background: #0b0b0c; }
-  .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) grayscale(.85) brightness(.82) contrast(1.15); }
-  .leaflet-control-attribution { background: rgba(17,17,18,.7) !important; color: rgba(248,248,246,.5) !important; font-size: 9px !important; }
-  .leaflet-control-attribution a { color: rgba(248,248,246,.7) !important; }
+  #harita { position: absolute; inset: 0; background: #F1F1EF; }
+  .leaflet-container { font-family: inherit; background: #F1F1EF; }
+  .leaflet-tile-pane { filter: grayscale(.9) brightness(1.04) contrast(.92); }
+  .leaflet-control-attribution { background: rgba(248,248,246,.8) !important; color: rgba(17,17,18,.5) !important; font-size: 9px !important; }
+  .leaflet-control-attribution a { color: rgba(17,17,18,.65) !important; }
   .cerceve.harita::after {
     content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 500;
-    background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(17,17,18,.55) 100%);
+    background: linear-gradient(180deg, transparent 70%, rgba(17,17,18,.06) 100%);
   }
   .isaret { position: relative; width: 0; height: 0; }
   .isaret i { position: absolute; left: 0; top: 0; border-radius: 50%; transform: translate(-50%, -50%); }
   .isaret .cekirdek {
-    width: 16px; height: 16px; background: var(--kirmizi); border: 3px solid #fff;
-    box-shadow: 0 0 12px 4px rgba(237,28,36,.9), 0 0 36px 12px rgba(237,28,36,.45);
-    animation: nabiz-cekirdek 1.6s ease-in-out infinite;
+    width: 18px; height: 18px; background: var(--kirmizi); border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(17,17,18,.3);
   }
-  .isaret .halka { width: 18px; height: 18px; border: 2px solid var(--kirmizi); background: rgba(237,28,36,.18); animation: halka 2.4s cubic-bezier(.2,.6,.3,1) infinite; }
-  .isaret .halka:nth-child(2) { animation-delay: .8s; }
-  .isaret .halka:nth-child(3) { animation-delay: 1.6s; }
-  @keyframes halka { from { width: 18px; height: 18px; opacity: .95; } to { width: 150px; height: 150px; opacity: 0; } }
-  @keyframes nabiz-cekirdek {
-    0%, 100% { box-shadow: 0 0 10px 3px rgba(237,28,36,.85), 0 0 28px 8px rgba(237,28,36,.35); }
-    50% { box-shadow: 0 0 18px 7px rgba(237,28,36,1), 0 0 56px 20px rgba(237,28,36,.55); }
-  }
+  .isaret .halka { width: 18px; height: 18px; background: rgba(237,28,36,.28); animation: halka 2.8s ease-out infinite; }
+  .isaret .halka:nth-child(2) { animation-delay: 1.4s; }
+  @keyframes halka { from { width: 18px; height: 18px; opacity: .95; } to { width: 64px; height: 64px; opacity: 0; } }
   .harita-etiket {
     position: absolute; left: 12px; top: 12px; z-index: 600; display: inline-flex; align-items: center; gap: 8px;
-    padding: 7px 12px; border-radius: 999px; background: rgba(17,17,18,.78); border: 1px solid rgba(248,248,246,.12);
+    padding: 7px 12px; border-radius: 999px; background: rgba(255,255,255,.92); color: #111112; border: 1px solid rgba(17,17,18,.08); box-shadow: 0 2px 10px rgba(17,17,18,.12);
     font-size: 12.5px; font-weight: 600; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   }
-  .canli { width: 8px; height: 8px; border-radius: 50%; background: var(--kirmizi); box-shadow: 0 0 8px var(--kirmizi); animation: yanip 1.2s steps(2, jump-none) infinite; }
-  @keyframes yanip { 50% { opacity: .25; } }
-  @media (prefers-reduced-motion: reduce) { .isaret .halka, .isaret .cekirdek, .canli { animation: none; } }
+  .canli { width: 8px; height: 8px; border-radius: 50%; background: var(--kirmizi); }
+  @media (prefers-reduced-motion: reduce) { .isaret .halka { animation: none; opacity: 0; } }
   footer { text-align: center; color: rgba(248,248,246,.38); font-size: 12px; margin-top: 36px; }
 
   /* Açılış */
@@ -274,7 +267,7 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
   }).addTo(h);
   L.marker(konum, {
-    icon: L.divIcon({ className: '', html: '<div class="isaret"><i class="halka"></i><i class="halka"></i><i class="halka"></i><i class="cekirdek"></i></div>', iconSize: [0, 0] }),
+    icon: L.divIcon({ className: '', html: '<div class="isaret"><i class="halka"></i><i class="halka"></i><i class="cekirdek"></i></div>', iconSize: [0, 0] }),
     keyboard: false, interactive: false
   }).addTo(h);
   h.attributionControl.setPrefix(false);
