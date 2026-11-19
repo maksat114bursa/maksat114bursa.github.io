@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maksat 114 · Bağlantılar</title>
 <meta name="description" content="Maksat 114 İlim ve Kültür Derneği: sosyal medya hesaplarımız, konumumuz ve son videomuz.">
-<meta name="theme-color" content="#28528C">
+<meta name="theme-color" content="#F8F8F6">
 <meta property="og:title" content="Maksat | 114">
 <meta property="og:description" content="Hesaplarımız, konumumuz ve son videomuz tek sayfada.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111112'/%3E%3Crect x='14.5' y='6' width='3' height='20' fill='%23ED1C24'/%3E%3C/svg%3E">
@@ -14,13 +14,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --zemin: #28528C;
-    --zemin-alt: #193659;
-    --panel: rgba(255, 255, 255, .13);
-    --panel-2: rgba(255, 255, 255, .2);
-    --cizgi: rgba(255, 255, 255, .16);
-    --metin: #F8F8F6;
-    --soluk: rgba(248, 248, 246, .74);
+    --zemin: #F8F8F6;
+    --panel: #EEEEEC;
+    --panel-2: #E5E5E2;
+    --cizgi: rgba(17, 17, 18, .07);
+    --metin: #111112;
+    --soluk: rgba(17, 17, 18, .58);
+    --kirmizi-dugme: #C9121A;
     --kirmizi: #ED1C24;
     --kirmizi-yazi: #FF4D55;
     --yuvarlak: 18px;
@@ -28,7 +28,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body {
-    background: var(--zemin-alt) linear-gradient(180deg, var(--zemin) 0, var(--zemin) 560px, var(--zemin-alt) 100%) no-repeat;
+    background: var(--zemin);
     color: var(--metin);
     font-family: "Onest", system-ui, -apple-system, sans-serif;
     line-height: 1.45;
@@ -52,7 +52,7 @@
   .bas-yazi { position: relative; margin-top: -86px; padding: 0 16px 6px; }
   .bas h1 {
     font-size: clamp(28px, 8.4vw, 38px); font-weight: 700; letter-spacing: -.03em; line-height: 1.1;
-    display: inline-flex; align-items: center; gap: 8px; text-shadow: 0 2px 18px rgba(10, 25, 50, .45);
+    display: inline-flex; align-items: center; gap: 8px; 
   }
   .onay { width: .72em; height: .72em; flex: none; }
   @media (min-width: 512px) {
@@ -79,7 +79,7 @@
     padding: 14px 14px; min-height: 64px; min-width: 0;
     transition: transform .15s ease, background .15s ease, border-color .15s ease;
   }
-  .hesap:hover { background: var(--panel-2); border-color: rgba(255, 255, 255, .32); }
+  .hesap:hover { background: var(--panel-2); border-color: rgba(17, 17, 18, .18); }
   .hesap:active { transform: scale(.97); }
   .hesap svg { width: 26px; height: 26px; flex: none; }
   .hesap span { display: flex; flex-direction: column; min-width: 0; }
@@ -91,7 +91,7 @@
     background: var(--panel); border: 1px solid var(--cizgi); border-radius: var(--yuvarlak);
     overflow: hidden;
   }
-  .cerceve { position: relative; background: #0b0b0c; }
+  .cerceve { position: relative; background: var(--panel-2); }
   .cerceve iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
   .cerceve.harita { aspect-ratio: 16 / 10; }
   .cerceve.video { aspect-ratio: 16 / 9; }
@@ -106,12 +106,12 @@
   .dugme {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     margin-top: 14px; padding: 13px 16px; border-radius: 999px;
-    background: var(--kirmizi); color: #fff; font-weight: 600; font-size: 15px;
+    background: var(--kirmizi-dugme); color: #fff; font-weight: 600; font-size: 15px;
     transition: filter .15s ease, transform .15s ease;
   }
   .dugme:hover { filter: brightness(1.08); }
   .dugme:active { transform: scale(.98); }
-  .dugme.ikincil { background: transparent; border: 1px solid rgba(248,248,246,.22); color: var(--metin); }
+  .dugme.ikincil { background: transparent; border: 1px solid rgba(17,17,18,.2); color: var(--metin); }
   .dugme svg { width: 18px; height: 18px; }
 
   /* Hoca kartı */
@@ -128,7 +128,7 @@
   }
   .rozet img {
     width: 100%; height: 100%; border-radius: 50%; display: block; object-fit: cover;
-    border: 2px solid #2E5A94; background: #2E5A94;
+    border: 2px solid var(--zemin); background: var(--panel);
   }
   .hoca div { flex: 1; min-width: 0; }
   .hoca strong { display: block; font-size: 16px; font-weight: 600; }
@@ -138,7 +138,7 @@
     font-weight: 600; font-size: 14px;
   }
 
-  footer { text-align: center; color: rgba(248,248,246,.5); font-size: 12px; margin-top: 36px; padding-bottom: max(32px, env(safe-area-inset-bottom)); }
+  footer { text-align: center; color: var(--soluk); font-size: 12px; margin-top: 36px; padding-bottom: max(32px, env(safe-area-inset-bottom)); }
 
   /* Açılış */
   @media (prefers-reduced-motion: no-preference) {
@@ -170,7 +170,7 @@
     <h2 id="b-hesap">Hesaplarımız</h2>
     <div class="hesaplar">
       <a class="hesap" href="https://www.instagram.com/maksat114bursa" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#F8F8F6" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#F8F8F6" stroke="none"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#111112" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#111112" stroke="none"/></svg>
         <span><strong>Instagram</strong><small>@maksat114bursa</small></span>
       </a>
       <a class="hesap" href="https://www.youtube.com/@maksat114bursa" target="_blank" rel="noopener">
@@ -182,7 +182,7 @@
         <span><strong>WhatsApp</strong><small>Kanalımız</small></span>
       </a>
       <a class="hesap" href="https://www.tiktok.com/@maksat114bursa" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M14.5 3h3c.2 1.9 1.6 3.4 3.5 3.6v3a7.3 7.3 0 0 1-3.5-1.1v6.4a5.9 5.9 0 1 1-5.9-5.9h.6v3.1a2.8 2.8 0 1 0 2.3 2.8z" fill="#F8F8F6"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M14.5 3h3c.2 1.9 1.6 3.4 3.5 3.6v3a7.3 7.3 0 0 1-3.5-1.1v6.4a5.9 5.9 0 1 1-5.9-5.9h.6v3.1a2.8 2.8 0 1 0 2.3 2.8z" fill="#111112"/></svg>
         <span><strong>TikTok</strong><small>@maksat114bursa</small></span>
       </a>
       <a class="hesap" href="https://t.me/maksat114bursa" target="_blank" rel="noopener">
