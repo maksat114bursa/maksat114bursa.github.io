@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maksat 114 · Bağlantılar</title>
 <meta name="description" content="Maksat 114 İlim ve Kültür Derneği: sosyal medya hesaplarımız, konumumuz ve son videomuz.">
-<meta name="theme-color" content="#111112">
+<meta name="theme-color" content="#28528C">
 <meta property="og:title" content="Maksat | 114">
 <meta property="og:description" content="Hesaplarımız, konumumuz ve son videomuz tek sayfada.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111112'/%3E%3Crect x='14.5' y='6' width='3' height='20' fill='%23ED1C24'/%3E%3C/svg%3E">
@@ -14,12 +14,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --zemin: #111112;
-    --panel: #1C1C1E;
-    --panel-2: #242427;
-    --cizgi: rgba(248, 248, 246, .08);
+    --zemin: #28528C;
+    --zemin-alt: #193659;
+    --panel: rgba(255, 255, 255, .13);
+    --panel-2: rgba(255, 255, 255, .2);
+    --cizgi: rgba(255, 255, 255, .16);
     --metin: #F8F8F6;
-    --soluk: rgba(248, 248, 246, .62);
+    --soluk: rgba(248, 248, 246, .74);
     --kirmizi: #ED1C24;
     --kirmizi-yazi: #FF4D55;
     --yuvarlak: 18px;
@@ -27,7 +28,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body {
-    background: var(--zemin);
+    background: var(--zemin-alt) linear-gradient(180deg, var(--zemin) 0, var(--zemin) 560px, var(--zemin-alt) 100%) no-repeat;
     color: var(--metin);
     font-family: "Onest", system-ui, -apple-system, sans-serif;
     line-height: 1.45;
@@ -38,13 +39,26 @@
   .sayfa {
     max-width: 480px;
     margin: 0 auto;
-    padding: max(36px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+    padding: 0 16px max(32px, env(safe-area-inset-bottom));
   }
 
   /* Başlık */
-  .bas { text-align: center; padding: 8px 0 28px; }
-  .bas img { width: 200px; max-width: 62%; height: auto; display: block; margin: 0 auto 18px; }
-  .bas h1 { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  .bas { position: relative; margin: 0 -16px; text-align: center; }
+  .kapak {
+    aspect-ratio: 840 / 720; background: url(img/bina.jpg) center top / cover no-repeat;
+    -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
+            mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
+  }
+  .bas-yazi { position: relative; margin-top: -86px; padding: 0 16px 6px; }
+  .bas h1 {
+    font-size: clamp(28px, 8.4vw, 38px); font-weight: 700; letter-spacing: -.03em; line-height: 1.1;
+    display: inline-flex; align-items: center; gap: 8px; text-shadow: 0 2px 18px rgba(10, 25, 50, .45);
+  }
+  .onay { width: .72em; height: .72em; flex: none; }
+  @media (min-width: 512px) {
+    .bas { margin: 16px 0 0; }
+    .kapak { border-radius: 28px 28px 0 0; }
+  }
   .gizli { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
   .bas h1 b { color: var(--kirmizi); font-weight: 700; padding: 0 .15em; }
   .bas p { color: var(--soluk); font-size: 14.5px; margin-top: 2px; }
@@ -65,7 +79,7 @@
     padding: 14px 14px; min-height: 64px; min-width: 0;
     transition: transform .15s ease, background .15s ease, border-color .15s ease;
   }
-  .hesap:hover { background: var(--panel-2); border-color: rgba(237, 28, 36, .45); }
+  .hesap:hover { background: var(--panel-2); border-color: rgba(255, 255, 255, .32); }
   .hesap:active { transform: scale(.97); }
   .hesap svg { width: 26px; height: 26px; flex: none; }
   .hesap span { display: flex; flex-direction: column; min-width: 0; }
@@ -114,7 +128,7 @@
   }
   .rozet img {
     width: 100%; height: 100%; border-radius: 50%; display: block; object-fit: cover;
-    border: 2px solid var(--panel); background: var(--panel-2);
+    border: 2px solid #2E5A94; background: #2E5A94;
   }
   .hoca div { flex: 1; min-width: 0; }
   .hoca strong { display: block; font-size: 16px; font-weight: 600; }
@@ -124,7 +138,7 @@
     font-weight: 600; font-size: 14px;
   }
 
-  footer { text-align: center; color: rgba(248,248,246,.38); font-size: 12px; margin-top: 36px; }
+  footer { text-align: center; color: rgba(248,248,246,.5); font-size: 12px; margin-top: 36px; padding-bottom: max(32px, env(safe-area-inset-bottom)); }
 
   /* Açılış */
   @media (prefers-reduced-motion: no-preference) {
@@ -145,9 +159,11 @@
 <main class="sayfa">
 
   <header class="bas">
-    <img src="img/logo-beyaz.png" width="620" height="142" alt="Maksat 114">
-    <h1 class="gizli">Maksat 114</h1>
-    <p>İlim ve Kültür Derneği · Bursa</p>
+    <div class="kapak" role="img" aria-label="Bursa'daki Maksat 114 binası"></div>
+    <div class="bas-yazi">
+      <h1>@maksat114bursa<svg class="onay" viewBox="0 0 24 24" aria-label="Resmî hesap"><path d="M12 1.5l2.6 1.9 3.2-.1 1 3 2.6 1.9-1 3.1 1 3-2.6 1.9-1 3.1-3.2-.1L12 22.5l-2.6-1.9-3.2.1-1-3.1-2.6-1.9 1-3-1-3.1 2.6-1.9 1-3 3.2.1z" fill="#ED1C24"/><path d="M7.8 12.2l2.8 2.8 5.6-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
+      <p>Maksat 114 İlim ve Kültür Derneği · Bursa</p>
+    </div>
   </header>
 
   <section class="bolum" aria-labelledby="b-hesap">
