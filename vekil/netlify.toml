@@ -1,0 +1,8 @@
+# Türkiye'de workers.dev engelli olduğu için panel ve sayaç bu Netlify adresinden
+# Cloudflare Worker'a iletilir. Bkz. netlify/edge-functions/vekil.ts
+[build]
+  publish = "bos"
+
+[[edge_functions]]
+  function = "vekil"
+  path = "/*"

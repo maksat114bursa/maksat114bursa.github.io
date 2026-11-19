@@ -50,3 +50,13 @@ export async function imzaDogrula(token, anahtar) {
 export async function ozet(metin) {
   return b64(await crypto.subtle.digest('SHA-256', enc.encode(metin))).slice(0, 22);
 }
+
+// Netlify vekilinden gelen isteklerde gerçek ziyaretçi bilgisi başlıklarda taşınır.
+// Başlıklara yalnızca gizli vekil anahtarı doğruysa güvenilir.
+export function istemci(istek, vekilAnahtar) {
+  const h = istek.headers, cf = istek.cf || {};
+  if (vekilAnahtar && h.get('x-vekil') === vekilAnahtar) {
+    return { ip: h.get('x-istemci-ip') || '', ulke: h.get('x-istemci-ulke') || null, sehir: h.get('x-istemci-sehir') || null };
+  }
+  return { ip: h.get('cf-connecting-ip') || '', ulke: cf.country || null, sehir: cf.city || null };
+}

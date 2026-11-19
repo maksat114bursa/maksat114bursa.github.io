@@ -1,6 +1,6 @@
 import PANEL from './panel.html';
 import { veriDogrula } from './dogrula.js';
-import { cihaz, kaynak, olayTemizle, imzala, imzaDogrula, ozet } from './yardim.js';
+import { cihaz, kaynak, olayTemizle, imzala, imzaDogrula, ozet, istemci } from './yardim.js';
 
 const GUN = 86400000;
 const trGun = (t = Date.now()) => new Date(t + 3 * 3600000).toISOString().slice(0, 10); // Türkiye saati (UTC+3)
@@ -24,14 +24,13 @@ async function olayKaydet(istek, env, ctx) {
   const ua = istek.headers.get('user-agent') || '';
   if (/bot|crawl|spider|preview|facebookexternalhit|headless/i.test(ua) && !/Instagram|FBAN|FBAV/i.test(ua))
     return new Response(null, { status: 204, headers: cors });
-  const ip = istek.headers.get('cf-connecting-ip') || '';
+  const { ip, ulke, sehir } = istemci(istek, env.VEKIL_ANAHTAR);
   const gun = trGun();
   // Günlük tekil ziyaretçi: IP saklanmaz, yalnızca gün + gizli tuzla tek yönlü özet
   const ziyaretci = await ozet(`${ip}|${ua}|${gun}|${env.OTURUM_ANAHTAR}`);
-  const cf = istek.cf || {};
   ctx.waitUntil(env.DB.prepare(
     'INSERT INTO olaylar (zaman, gun, olay, ziyaretci, cihaz, kaynak, ulke, sehir) VALUES (?,?,?,?,?,?,?,?)'
-  ).bind(Date.now(), gun, olay, ziyaretci, cihaz(ua), kaynak(ua, String(govde.r || '')), cf.country || null, cf.city || null).run());
+  ).bind(Date.now(), gun, olay, ziyaretci, cihaz(ua), kaynak(ua, String(govde.r || '')), ulke, sehir).run());
   return new Response(null, { status: 204, headers: cors });
 }
 
@@ -49,7 +48,7 @@ async function esit(a, b) {
   return f === 0;
 }
 async function giris(istek, env) {
-  const kim = await ozet('giris|' + (istek.headers.get('cf-connecting-ip') || '') + '|' + env.OTURUM_ANAHTAR);
+  const kim = await ozet('giris|' + istemci(istek, env.VEKIL_ANAHTAR).ip + '|' + env.OTURUM_ANAHTAR);
   const simdi = Date.now();
   const { n } = await env.DB.prepare('SELECT COUNT(*) AS n FROM girisler WHERE kim = ? AND zaman > ? AND basarili = 0').bind(kim, simdi - 15 * 60000).first();
   if (n >= 10) return json({ hata: 'Çok fazla yanlış deneme. 15 dakika sonra tekrar deneyin.' }, 429);
@@ -126,7 +125,7 @@ export default {
       if (istek.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsBasliklari(istek, env) });
       if (istek.method === 'POST') return olayKaydet(istek, env, ctx);
     }
-    if (yol === '/' ) return Response.redirect(url.origin + '/panel', 302);
+    if (yol === "/") return new Response(null, { status: 302, headers: { location: "/panel" } });
     if (yol === '/panel') return new Response(PANEL, {
       headers: {
         'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-frame-options': 'DENY', 'referrer-policy': 'no-referrer',

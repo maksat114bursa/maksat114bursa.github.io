@@ -56,3 +56,18 @@ test('imza: doğru anahtarla geçer, değişmiş/eskimiş olan geçmez', async (
   const eski = await imzala({ son: Date.now() - 1 }, 'gizli');
   assert.equal(await imzaDogrula(eski, 'gizli'), null);
 });
+
+import { istemci } from '../src/yardim.js';
+const istek = (h, cf) => ({ headers: new Headers(h), cf });
+test('istemci: doğru vekil anahtarıyla Netlify başlıkları kullanılır', () => {
+  const r = istemci(istek({ 'x-vekil': 'gizli', 'x-istemci-ip': '1.2.3.4', 'x-istemci-ulke': 'TR', 'x-istemci-sehir': 'Bursa', 'cf-connecting-ip': '9.9.9.9' }, { country: 'US', city: 'Ashburn' }), 'gizli');
+  assert.deepEqual(r, { ip: '1.2.3.4', ulke: 'TR', sehir: 'Bursa' });
+});
+test('istemci: anahtar yanlışsa başlıklar yok sayılır', () => {
+  const r = istemci(istek({ 'x-vekil': 'sahte', 'x-istemci-ip': '1.2.3.4', 'x-istemci-ulke': 'TR', 'cf-connecting-ip': '9.9.9.9' }, { country: 'US', city: 'Ashburn' }), 'gizli');
+  assert.deepEqual(r, { ip: '9.9.9.9', ulke: 'US', sehir: 'Ashburn' });
+});
+test('istemci: anahtar tanımlı değilse başlıklar yok sayılır', () => {
+  const r = istemci(istek({ 'x-vekil': '', 'x-istemci-ip': '1.2.3.4', 'cf-connecting-ip': '9.9.9.9' }, {}), undefined);
+  assert.equal(r.ip, '9.9.9.9');
+});
