@@ -1,0 +1,1 @@
+{"name":"maksat114-panel","private":true,"type":"module","scripts":{"test":"node --test test/","dev":"wrangler dev","deploy":"wrangler deploy"},"devDependencies":{"wrangler":"^4.165.0"}}

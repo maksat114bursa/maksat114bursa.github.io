@@ -170,6 +170,7 @@
   .harita-metro img { width: 22px; height: 22px; border-radius: 5px; display: block; }
   .harita-metro em { font-style: normal; color: var(--kirmizi-yazi); }
   @media (prefers-reduced-motion: reduce) { .akan-yol { animation: none; } }
+  #v-takip { display: grid; gap: 10px; }
   footer { text-align: center; color: rgba(248,248,246,.38); font-size: 12px; margin-top: 36px; }
 
   /* Açılış */
@@ -193,33 +194,33 @@
   <header class="bas">
     <img src="img/logo-beyaz.png" width="620" height="142" alt="Maksat 114">
     <h1 class="gizli">Maksat 114</h1>
-    <p>Gençlik Merkezi · Bursa</p>
+    <p id="v-alt">Gençlik Merkezi · Bursa</p>
   </header>
 
   <section class="bolum" aria-labelledby="b-hesap">
     <h2 id="b-hesap">Hesaplarımız</h2>
-    <div class="hesaplar">
-      <a class="hesap" href="https://www.instagram.com/maksat114bursa" target="_blank" rel="noopener">
+    <div class="hesaplar" id="v-hesaplar">
+      <a class="hesap" data-olay="hesap:instagram" href="https://www.instagram.com/maksat114bursa" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="#F8F8F6" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#F8F8F6" stroke="none"/></svg>
         <span><strong>Instagram</strong><small>@maksat114bursa</small></span>
       </a>
-      <a class="hesap" href="https://www.youtube.com/@maksat114bursa" target="_blank" rel="noopener">
+      <a class="hesap" data-olay="hesap:youtube" href="https://www.youtube.com/@maksat114bursa" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><rect x="1.5" y="4.5" width="21" height="15" rx="4.5" fill="#ED1C24"/><path d="M10 8.8v6.4l5.6-3.2z" fill="#fff"/></svg>
         <span><strong>YouTube</strong><small>@maksat114bursa</small></span>
       </a>
-      <a class="hesap" href="https://whatsapp.com/channel/0029Va69sM6HwXbLIa6p8H2W" target="_blank" rel="noopener">
+      <a class="hesap" data-olay="hesap:whatsapp" href="https://whatsapp.com/channel/0029Va69sM6HwXbLIa6p8H2W" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="1.8" stroke-linejoin="round"><path d="M4.2 19.8l1.1-3.9A8.4 8.4 0 1 1 8.4 19l-4.2.8z"/><path d="M9 8.6c.2-.5.5-.5.8-.5h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c.6 1.2 1.6 2.1 2.8 2.7l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .3 0 .6-.5.8-.6.3-1.6.5-3.3-.4a9 9 0 0 1-3.6-3.6c-.8-1.6-.7-2.7-.5-3.2z" fill="#25D366" stroke="none"/></svg>
         <span><strong>WhatsApp</strong><small>Kanalımız</small></span>
       </a>
-      <a class="hesap" href="https://www.tiktok.com/@maksat114bursa" target="_blank" rel="noopener">
+      <a class="hesap" data-olay="hesap:tiktok" href="https://www.tiktok.com/@maksat114bursa" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M14.5 3h3c.2 1.9 1.6 3.4 3.5 3.6v3a7.3 7.3 0 0 1-3.5-1.1v6.4a5.9 5.9 0 1 1-5.9-5.9h.6v3.1a2.8 2.8 0 1 0 2.3 2.8z" fill="#F8F8F6"/></svg>
         <span><strong>TikTok</strong><small>@maksat114bursa</small></span>
       </a>
-      <a class="hesap" href="https://t.me/maksat114bursa" target="_blank" rel="noopener">
+      <a class="hesap" data-olay="hesap:telegram" href="https://t.me/maksat114bursa" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2AABEE"/><path d="M6.2 11.7l9.6-3.8c.5-.2.9.1.7.8l-1.6 7.7c-.1.5-.5.7-.9.4l-2.5-1.8-1.2 1.2c-.1.1-.3.2-.5.2l.2-2.5 4.6-4.2c.2-.2 0-.3-.3-.1l-5.7 3.6-2.4-.8c-.5-.2-.5-.5.1-.7z" fill="#fff"/></svg>
         <span><strong>Telegram</strong><small>@maksat114bursa</small></span>
       </a>
-      <a class="hesap" href="https://www.facebook.com/maksat114bursa" target="_blank" rel="noopener">
+      <a class="hesap" data-olay="hesap:facebook" href="https://www.facebook.com/maksat114bursa" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1877F2"/><path d="M13.2 20.9v-6.6h2.2l.4-2.6h-2.6V10c0-.8.3-1.3 1.4-1.3h1.3V6.4c-.6-.1-1.3-.2-2-.2-2 0-3.3 1.2-3.3 3.4v2.1H8.4v2.6h2.2v6.6z" fill="#fff"/></svg>
         <span><strong>Facebook</strong><small>maksat114bursa</small></span>
       </a>
@@ -232,12 +233,12 @@
       <div class="cerceve harita">
         <div class="yedek">Harita yükleniyor…</div>
         <div id="harita" aria-label="Maksat 114 konumu haritası"></div>
-        <div class="harita-etiket"><span class="canli"></span>Maksat 114 · Nilüfer</div>
-        <div class="harita-metro"><img src="img/bursaray.svg" alt="">BursaRay Altınşehir <em>· 3 dk yürüme</em></div>
+        <div class="harita-etiket"><span class="canli"></span><span id="v-etiket">Maksat 114 · Nilüfer</span></div>
+        <div class="harita-metro"><img src="img/bursaray.svg" alt=""><span id="v-metro">BursaRay Altınşehir</span> <em id="v-sure">· 3 dk yürüme</em></div>
       </div>
       <div class="kart-alt">
-        <p class="adres">Altınşehir Mahallesi, 204. Sk. No:1<small>16120 Nilüfer / Bursa</small></p>
-        <a class="dugme" href="https://www.google.com/maps/dir/?api=1&destination=40.21655%2C28.93492" target="_blank" rel="noopener">
+        <p class="adres" id="v-adres">Altınşehir Mahallesi, 204. Sk. No:1<small>16120 Nilüfer / Bursa</small></p>
+        <a class="dugme" id="v-tarif" data-olay="yol-tarifi" href="https://www.google.com/maps/dir/?api=1&destination=40.21655%2C28.93492" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8z"/></svg>
           Yol tarifi al
         </a>
@@ -255,27 +256,28 @@
           allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
       <div class="kart-alt">
-        <a class="dugme ikincil" href="https://www.youtube.com/@maksat114bursa/videos" target="_blank" rel="noopener">Tüm videolar YouTube'da</a>
+        <a class="dugme ikincil" data-olay="youtube-tum" href="https://www.youtube.com/@maksat114bursa/videos" target="_blank" rel="noopener">Tüm videolar YouTube'da</a>
       </div>
     </div>
   </section>
 
   <section class="bolum" aria-labelledby="b-hoca">
     <h2 id="b-hoca">Takip edin</h2>
-    <a class="kart hoca" href="https://www.instagram.com/harunserkanaktas" target="_blank" rel="noopener">
+    <div id="v-takip">
+    <a class="kart hoca" data-olay="takip:harunserkanaktas" href="https://www.instagram.com/harunserkanaktas" target="_blank" rel="noopener">
       <span class="rozet"><img src="img/harun.jpg" width="84" height="84" alt="Harun Serkan Aktaş"></span>
       <div><strong>Harun Serkan Aktaş</strong><small>@harunserkanaktas</small></div>
       <span class="takip">Takip et</span>
     </a>
+    </div>
   </section>
 
-  <footer>© Maksat 114 Gençlik Merkezi</footer>
+  <footer id="v-altbilgi">© Maksat 114 Gençlik Merkezi</footer>
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-(function () {
+function haritaKur(konum) {
   if (!window.L) return;
-  var konum = [40.21655, 28.93492];
   var dokunmatik = matchMedia('(pointer: coarse)').matches;
   var h = L.map('harita', {
     center: konum, zoom: 17, zoomSnap: 0.25, zoomControl: false, scrollWheelZoom: false,
@@ -287,6 +289,15 @@
   }).addTo(h);
   var metro = [40.2148075, 28.934079];
   var yol = [[40.21655,28.934921],[40.216318,28.935049],[40.21636,28.934391],[40.216284,28.934449],[40.216077,28.934417],[40.215717,28.934366],[40.214974,28.934235],[40.214873,28.934341],[40.214804,28.934377]];
+  // Rota yalnız konum bilinen bina noktasına yakınsa çizilir (panelden konum çok değişirse rota gizlenir)
+  if (h.distance(konum, yol[0]) > 60) {
+    L.marker(metro, { icon: L.divIcon({ className: '', html: '<img class="metro-isaret" src="img/bursaray.svg" alt="BursaRay">', iconSize: [0, 0] }), keyboard: false, interactive: false }).addTo(h);
+    h.fitBounds(L.latLngBounds([konum, metro]), { paddingTopLeft: [30, 62], paddingBottomRight: [30, 78], maxZoom: 17 });
+    L.marker(konum, { icon: L.divIcon({ className: '', html: '<div class="isaret"><i class="halka"></i><i class="halka"></i><i class="cekirdek"></i></div>', iconSize: [0, 0] }), keyboard: false, interactive: false }).addTo(h);
+    h.attributionControl.setPrefix(false);
+    return;
+  }
+  yol[0] = konum;
   L.polyline(yol, { color: '#fff', weight: 7, opacity: .9, lineCap: 'round', lineJoin: 'round', interactive: false }).addTo(h);
   L.polyline(yol, { color: '#ED1C24', weight: 4, dashArray: '2 9', lineCap: 'round', className: 'akan-yol', interactive: false }).addTo(h);
   L.marker(metro, {
@@ -328,6 +339,86 @@
     keyboard: false, interactive: false
   }).addTo(h);
   h.attributionControl.setPrefix(false);
+}
+</script>
+<script>
+(function () {
+  var SAYAC = 'SAYAC_ADRESI'; // Worker adresi (yayında doldurulur)
+  var VARSAYILAN = [40.21655, 28.93492];
+
+  // --- Sayaç: IP/çerez yok, sadece olay adı ---
+  function olay(ad) {
+    if (SAYAC.indexOf('http') !== 0) return;
+    try {
+      var govde = JSON.stringify({ o: String(ad).slice(0, 80), r: document.referrer.slice(0, 200) });
+      if (navigator.sendBeacon) navigator.sendBeacon(SAYAC + '/o', new Blob([govde], { type: 'text/plain' }));
+      else fetch(SAYAC + '/o', { method: 'POST', body: govde, keepalive: true, mode: 'no-cors' });
+    } catch (e) {}
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[data-olay]');
+    if (a) olay(a.getAttribute('data-olay'));
+  });
+
+  // --- İçerik: veri.json ---
+  var IKON = {
+    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="#F8F8F6" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#F8F8F6" stroke="none"/></svg>',
+    youtube: '<svg viewBox="0 0 24 24"><rect x="1.5" y="4.5" width="21" height="15" rx="4.5" fill="#ED1C24"/><path d="M10 8.8v6.4l5.6-3.2z" fill="#fff"/></svg>',
+    whatsapp: '<svg viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="1.8" stroke-linejoin="round"><path d="M4.2 19.8l1.1-3.9A8.4 8.4 0 1 1 8.4 19l-4.2.8z"/><path d="M9 8.6c.2-.5.5-.5.8-.5h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c.6 1.2 1.6 2.1 2.8 2.7l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .3 0 .6-.5.8-.6.3-1.6.5-3.3-.4a9 9 0 0 1-3.6-3.6c-.8-1.6-.7-2.7-.5-3.2z" fill="#25D366" stroke="none"/></svg>',
+    tiktok: '<svg viewBox="0 0 24 24"><path d="M14.5 3h3c.2 1.9 1.6 3.4 3.5 3.6v3a7.3 7.3 0 0 1-3.5-1.1v6.4a5.9 5.9 0 1 1-5.9-5.9h.6v3.1a2.8 2.8 0 1 0 2.3 2.8z" fill="#F8F8F6"/></svg>',
+    telegram: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2AABEE"/><path d="M6.2 11.7l9.6-3.8c.5-.2.9.1.7.8l-1.6 7.7c-.1.5-.5.7-.9.4l-2.5-1.8-1.2 1.2c-.1.1-.3.2-.5.2l.2-2.5 4.6-4.2c.2-.2 0-.3-.3-.1l-5.7 3.6-2.4-.8c-.5-.2-.5-.5.1-.7z" fill="#fff"/></svg>',
+    facebook: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1877F2"/><path d="M13.2 20.9v-6.6h2.2l.4-2.6h-2.6V10c0-.8.3-1.3 1.4-1.3h1.3V6.4c-.6-.1-1.3-.2-2-.2-2 0-3.3 1.2-3.3 3.4v2.1H8.4v2.6h2.2v6.6z" fill="#fff"/></svg>',
+    x: '<svg viewBox="0 0 24 24"><path d="M17.8 3h3l-6.6 7.6L22 21h-6.1l-4.8-6.2L5.6 21h-3l7.1-8.1L2.2 3h6.2l4.3 5.7zm-1 16.2h1.7L7.3 4.7H5.5z" fill="#F8F8F6"/></svg>',
+    web: '<svg viewBox="0 0 24 24" fill="none" stroke="#F8F8F6" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>'
+  };
+  function k(x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function guvenliLink(u) { return /^https:\/\//.test(u || '') ? u : '#'; }
+  function guvenliFoto(u) { return /^(img\/[\w.-]+|https:\/\/[^"']+)$/.test(u || '') ? u : 'img/logo-beyaz.png'; }
+  function kimlik(s) { return String(s || '').toLocaleLowerCase('tr').replace(/[^a-z0-9ğüşıöç]+/g, '-').replace(/^-|-$/g, '').slice(0, 40); }
+  function yaz(id, html) { var e = document.getElementById(id); if (e) e.innerHTML = html; }
+
+  function ciz(v) {
+    if (v.altBaslik) yaz('v-alt', k(v.altBaslik));
+    if (Array.isArray(v.hesaplar) && v.hesaplar.length) {
+      yaz('v-hesaplar', v.hesaplar.map(function (h) {
+        return '<a class="hesap" data-olay="hesap:' + k(h.tur || kimlik(h.ad)) + '" href="' + k(guvenliLink(h.link)) + '" target="_blank" rel="noopener">' +
+          (IKON[h.tur] || IKON.web) + '<span><strong>' + k(h.ad) + '</strong><small>' + k(h.alt) + '</small></span></a>';
+      }).join(''));
+    }
+    var kn = v.konum || {};
+    if (kn.adres1) yaz('v-adres', k(kn.adres1) + '<small>' + k(kn.adres2) + '</small>');
+    if (kn.etiket) yaz('v-etiket', k(kn.etiket));
+    if (kn.metroYazi) yaz('v-metro', k(kn.metroYazi));
+    if (kn.metroSure) yaz('v-sure', '· ' + k(kn.metroSure));
+    if (isFinite(kn.enlem) && isFinite(kn.boylam)) {
+      var t = document.getElementById('v-tarif');
+      if (t) t.href = 'https://www.google.com/maps/dir/?api=1&destination=' + (+kn.enlem) + '%2C' + (+kn.boylam);
+    }
+    if (Array.isArray(v.takip)) {
+      yaz('v-takip', v.takip.map(function (h) {
+        var kul = String(h.kullanici || '').replace(/^@/, '');
+        return '<a class="kart hoca" data-olay="takip:' + k(kul || kimlik(h.ad)) + '" href="' + k(guvenliLink(h.link)) + '" target="_blank" rel="noopener">' +
+          '<span class="rozet"><img src="' + k(guvenliFoto(h.foto)) + '" width="84" height="84" alt="' + k(h.ad) + '"></span>' +
+          '<div><strong>' + k(h.ad) + '</strong><small>' + k(h.kullanici) + '</small></div><span class="takip">Takip et</span></a>';
+      }).join(''));
+      var bolum = document.getElementById('b-hoca');
+      if (bolum) bolum.parentNode.style.display = v.takip.length ? '' : 'none';
+    }
+    if (v.altBilgi) yaz('v-altbilgi', k(v.altBilgi));
+  }
+
+  var harita = false;
+  function haritaBir(kn) {
+    if (harita) return; harita = true;
+    var ok = kn && isFinite(kn.enlem) && isFinite(kn.boylam);
+    haritaKur(ok ? [+kn.enlem, +kn.boylam] : VARSAYILAN);
+  }
+  fetch('veri.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (v) { try { ciz(v); } catch (e) {} haritaBir(v && v.konum); })
+    .catch(function () { haritaBir(null); });
+  setTimeout(function () { haritaBir(null); }, 2500);
+  olay('ziyaret');
 })();
 </script>
 </body>

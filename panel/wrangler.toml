@@ -1,0 +1,22 @@
+name = "maksat114-panel"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
+
+[vars]
+SITE = "https://maksat114bursa.github.io"
+REPO = "maksat114bursa/maksat114bursa.github.io"
+DAL = "main"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "maksat114-panel"
+database_id = "BURAYA_D1_ID"
+
+[observability]
+enabled = true
