@@ -1,12 +1,42 @@
 {
   "altBaslik": "Gençlik Merkezi · Bursa",
   "hesaplar": [
-    { "tur": "instagram", "ad": "Instagram", "alt": "@maksat114bursa", "link": "https://www.instagram.com/maksat114bursa" },
-    { "tur": "youtube", "ad": "YouTube", "alt": "@maksat114bursa", "link": "https://www.youtube.com/@maksat114bursa" },
-    { "tur": "whatsapp", "ad": "WhatsApp", "alt": "Kanalımız", "link": "https://whatsapp.com/channel/0029Va69sM6HwXbLIa6p8H2W" },
-    { "tur": "tiktok", "ad": "TikTok", "alt": "@maksat114bursa", "link": "https://www.tiktok.com/@maksat114bursa" },
-    { "tur": "telegram", "ad": "Telegram", "alt": "@maksat114bursa", "link": "https://t.me/maksat114bursa" },
-    { "tur": "facebook", "ad": "Facebook", "alt": "maksat114bursa", "link": "https://www.facebook.com/maksat114bursa" }
+    {
+      "tur": "instagram",
+      "ad": "Instagram",
+      "alt": "@maksat114bursa",
+      "link": "https://www.instagram.com/maksat114bursa"
+    },
+    {
+      "tur": "youtube",
+      "ad": "YouTube",
+      "alt": "@maksat114bursa",
+      "link": "https://www.youtube.com/@maksat114bursa"
+    },
+    {
+      "tur": "whatsapp",
+      "ad": "WhatsApp",
+      "alt": "Kanalımız",
+      "link": "https://whatsapp.com/channel/0029Va69sM6HwXbLIa6p8H2W"
+    },
+    {
+      "tur": "tiktok",
+      "ad": "TikTok",
+      "alt": "@maksat114bursa",
+      "link": "https://www.tiktok.com/@maksat114bursa"
+    },
+    {
+      "tur": "telegram",
+      "ad": "Telegram",
+      "alt": "@maksat114bursa",
+      "link": "https://t.me/maksat114bursa"
+    },
+    {
+      "tur": "facebook",
+      "ad": "Facebook",
+      "alt": "maksat114bursa",
+      "link": "https://www.facebook.com/maksat114bursa"
+    }
   ],
   "konum": {
     "adres1": "Altınşehir Mahallesi, 204. Sk. No:1",
@@ -18,7 +48,12 @@
     "metroSure": "3 dk yürüme"
   },
   "takip": [
-    { "ad": "Harun Serkan Aktaş", "kullanici": "@harunserkanaktas", "link": "https://www.instagram.com/harunserkanaktas", "foto": "img/harun.jpg" }
+    {
+      "ad": "Harun Serkan Aktaş",
+      "kullanici": "@harunserkanaktas",
+      "link": "https://www.instagram.com/harunserkanaktas",
+      "foto": "img/harun.jpg"
+    }
   ],
   "altBilgi": "© Maksat 114 Gençlik Merkezi"
 }
