@@ -4,7 +4,7 @@ let hata = 0;
 const yanlis = (m) => { console.error('HATA:', m); hata++; };
 const h = readFileSync(new URL('index.html', kok), 'utf8');
 // Gömülü yedek içerik
-for (const g of ['https://www.instagram.com/maksat114bursa','https://www.youtube.com/@maksat114bursa','https://www.tiktok.com/@maksat114bursa','https://whatsapp.com/channel/0029Va69sM6HwXbLIa6p8H2W','https://t.me/maksat114bursa','https://www.facebook.com/maksat114bursa','https://www.instagram.com/harunserkanaktas','list=UUgC81lrIwMJJvAjyKm1ooow','Altınşehir Mahallesi, 204. Sk. No:1'])
+for (const g of ['https://www.instagram.com/maksat114bursa','https://www.youtube.com/@maksat114bursa','https://www.tiktok.com/@maksat114bursa','https://whatsapp.com/channel/0029Va69sM6HwXbLIa6p8H2W','https://t.me/maksat114bursa','https://www.facebook.com/maksat114bursa','https://www.instagram.com/harunserkanaktas','list=UULFgC81lrIwMJJvAjyKm1ooow','Altınşehir Mahallesi, 204. Sk. No:1'])
   if (!h.includes(g)) yanlis('index.html eksik: ' + g);
 for (const m of h.matchAll(/<a\s[^>]*href="(https?:[^"]+)"[^>]*>/g))
   if (!/target="_blank"/.test(m[0]) || !/rel="noopener"/.test(m[0])) yanlis('target/rel eksik: ' + m[1]);
