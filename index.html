@@ -171,7 +171,14 @@
   .harita-metro em { font-style: normal; color: var(--kirmizi-yazi); }
   @media (prefers-reduced-motion: reduce) { .akan-yol { animation: none; } }
   #v-takip { display: grid; gap: 10px; }
-  footer { text-align: center; color: rgba(248,248,246,.38); font-size: 12px; margin-top: 36px; }
+  /* Telefonda sıra: hesaplar, konum, video, takip */
+  .ikili { display: flex; flex-direction: column; }
+  .sutun { display: contents; }
+  .bolum[aria-labelledby="b-hesap"] { order: 1; }
+  .bolum[aria-labelledby="b-konum"] { order: 2; }
+  .bolum[aria-labelledby="b-video"] { order: 3; }
+  .bolum[aria-labelledby="b-hoca"] { order: 4; }
+  footer { text-align: center; color: rgba(248,248,246,.55); font-size: 12px; margin-top: 36px; }
 
   /* Açılış */
   @media (prefers-reduced-motion: no-preference) {
@@ -186,6 +193,30 @@
     .hesap { padding: 12px 10px; gap: 9px; }
     .hesap svg { width: 22px; height: 22px; }
   }
+
+  /* Tablet (dikey): daha geniş tek sütun, hesaplar 3'lü */
+  @media (min-width: 640px) {
+    .sayfa { max-width: 680px; padding-left: 24px; padding-right: 24px; padding-top: max(56px, env(safe-area-inset-top)); }
+    .bas { padding-bottom: 36px; }
+    .bas img { width: 250px; }
+    .bas p { font-size: 15.5px; }
+    .bolum { margin-top: 36px; }
+    .bolum h2 { font-size: 12.5px; }
+    .hesaplar { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    .hesap { min-height: 72px; padding: 16px; }
+    .cerceve.harita { aspect-ratio: 16 / 9; }
+    .kart-alt { padding: 16px 20px 20px; }
+    .hoca { padding: 16px 20px; }
+  }
+
+  /* Tablet (yatay) ve bilgisayar: iki bağımsız sütun */
+  @media (min-width: 960px) {
+    .sayfa { max-width: 1040px; padding-left: 32px; padding-right: 32px; }
+    .ikili { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 0 32px; align-items: start; }
+    .sutun { display: block; }
+    .hesaplar { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .cerceve.harita { aspect-ratio: 16 / 10; }
+  }
 </style>
 </head>
 <body>
@@ -197,6 +228,8 @@
     <p id="v-alt">Gençlik Merkezi · Bursa</p>
   </header>
 
+  <div class="ikili">
+  <div class="sutun">
   <section class="bolum" aria-labelledby="b-hesap">
     <h2 id="b-hesap">Hesaplarımız</h2>
     <div class="hesaplar" id="v-hesaplar">
@@ -227,6 +260,22 @@
     </div>
   </section>
 
+  <section class="bolum" aria-labelledby="b-video">
+    <h2 id="b-video">Son videomuz</h2>
+    <div class="kart">
+      <div class="cerceve video">
+        <div class="yedek">Video yükleniyor…</div>
+        <iframe loading="lazy" title="Maksat 114 YouTube son video"
+          src="https://www.youtube-nocookie.com/embed/videoseries?list=UULFgC81lrIwMJJvAjyKm1ooow&rel=0"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="kart-alt">
+        <a class="dugme ikincil" data-olay="youtube-tum" href="https://www.youtube.com/@maksat114bursa/videos" target="_blank" rel="noopener">Tüm videolar YouTube'da</a>
+      </div>
+    </div>
+  </section>
+  </div>
+  <div class="sutun">
   <section class="bolum" aria-labelledby="b-konum">
     <h2 id="b-konum">Konumumuz</h2>
     <div class="kart">
@@ -246,21 +295,6 @@
     </div>
   </section>
 
-  <section class="bolum" aria-labelledby="b-video">
-    <h2 id="b-video">Son videomuz</h2>
-    <div class="kart">
-      <div class="cerceve video">
-        <div class="yedek">Video yükleniyor…</div>
-        <iframe loading="lazy" title="Maksat 114 YouTube son video"
-          src="https://www.youtube-nocookie.com/embed/videoseries?list=UULFgC81lrIwMJJvAjyKm1ooow&rel=0"
-          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <div class="kart-alt">
-        <a class="dugme ikincil" data-olay="youtube-tum" href="https://www.youtube.com/@maksat114bursa/videos" target="_blank" rel="noopener">Tüm videolar YouTube'da</a>
-      </div>
-    </div>
-  </section>
-
   <section class="bolum" aria-labelledby="b-hoca">
     <h2 id="b-hoca">Takip edin</h2>
     <div id="v-takip">
@@ -271,6 +305,8 @@
     </a>
     </div>
   </section>
+  </div>
+  </div>
 
   <footer id="v-altbilgi">© Maksat 114 Gençlik Merkezi</footer>
 </main>
@@ -349,6 +385,7 @@ function haritaKur(konum) {
   // --- Sayaç: IP/çerez yok, sadece olay adı ---
   function olay(ad) {
     if (SAYAC.indexOf('http') !== 0) return;
+    if (/[?&]onizleme=1/.test(location.search)) return; // panel önizlemesi sayılmaz
     try {
       var govde = JSON.stringify({ o: String(ad).slice(0, 80), r: document.referrer.slice(0, 200) });
       if (navigator.sendBeacon) navigator.sendBeacon(SAYAC + '/o', new Blob([govde], { type: 'text/plain' }));
