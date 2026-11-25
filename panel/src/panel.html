@@ -66,6 +66,16 @@
   .satir .bar i { display: block; height: 100%; background: var(--kirmizi); border-radius: 3px; }
   .iki { display: grid; grid-template-columns: 1fr; gap: 10px; }
   @media (min-width: 720px) { .iki { grid-template-columns: 1fr 1fr; } }
+
+  /* Önizleme */
+  .cihazlar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+  .cihazlar button { border: 1px solid var(--cizgi); background: var(--panel); border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--soluk); display: inline-flex; align-items: center; gap: 7px; }
+  .cihazlar button svg { width: 16px; height: 16px; }
+  .cihazlar button[aria-pressed="true"] { border-color: var(--kirmizi); color: var(--metin); background: rgba(237,28,36,.12); }
+  .cihazlar .olcu { margin-left: auto; color: var(--soluk); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .sahne { display: flex; justify-content: center; }
+  .cihaz-kutu { position: relative; overflow: hidden; border-radius: 22px; border: 6px solid #2a2a2d; background: #000; box-shadow: 0 10px 40px rgba(0,0,0,.45); }
+  .cihaz-kutu iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; background: #111112; }
   .bos-yazi { color: var(--soluk); font-size: 14px; }
 
   /* Düzenle */
@@ -118,6 +128,7 @@
       <nav class="sekmeler" role="tablist">
         <button role="tab" aria-selected="true" data-sekme="istatistik">İstatistik</button>
         <button role="tab" aria-selected="false" data-sekme="duzenle">Düzenle</button>
+        <button role="tab" aria-selected="false" data-sekme="onizleme">Önizleme</button>
       </nav>
       <a class="kucuk" href="https://maksat114bursa.github.io/" target="_blank" rel="noopener">Sayfayı aç ↗</a>
       <button class="kucuk" id="cikis">Çıkış</button>
@@ -151,6 +162,17 @@
         <div><h2>Şehir</h2><div class="kart"><div class="liste" id="l-sehir"></div></div></div>
         <div><h2>Ülke</h2><div class="kart"><div class="liste" id="l-ulke"></div></div></div>
       </div>
+    </section>
+
+    <section id="s-onizleme" class="gizli">
+      <div class="cihazlar" id="cihazlar">
+        <button data-cihaz="telefon" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>Telefon</button>
+        <button data-cihaz="tablet" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2.5"/><path d="M11 18h2"/></svg>Tablet</button>
+        <button data-cihaz="bilgisayar" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Bilgisayar</button>
+        <button id="onizleme-yenile" aria-label="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>Yenile</button>
+        <span class="olcu" id="olcu"></span>
+      </div>
+      <div class="sahne" id="sahne"><div class="cihaz-kutu" id="cihaz-kutu"><iframe id="onizleme" title="Sayfa önizlemesi" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe></div></div>
     </section>
 
     <section id="s-duzenle" class="gizli">
@@ -239,13 +261,46 @@
   // --- Sekmeler ---
   document.querySelectorAll('[data-sekme]').forEach(function (b) {
     b.addEventListener('click', function () {
-      if (b.dataset.sekme === 'istatistik' && degisti && !confirm('Kaydedilmemiş değişiklikler var. Yine de çıkılsın mı?')) return;
+      var hedef = b.dataset.sekme;
+      if (hedef !== 'duzenle' && degisti && !confirm('Kaydedilmemiş değişiklikler var. Yine de çıkılsın mı?')) return;
       document.querySelectorAll('[data-sekme]').forEach(function (x) { x.setAttribute('aria-selected', x === b); });
-      $('#s-istatistik').classList.toggle('gizli', b.dataset.sekme !== 'istatistik');
-      $('#s-duzenle').classList.toggle('gizli', b.dataset.sekme !== 'duzenle');
-      if (b.dataset.sekme === 'duzenle') veriYukle(); else { degisti = false; cubuk(); istatistikYukle(); }
+      ['istatistik', 'duzenle', 'onizleme'].forEach(function (ad) { $('#s-' + ad).classList.toggle('gizli', hedef !== ad); });
+      if (hedef !== 'duzenle') { degisti = false; cubuk(); }
+      if (hedef === 'duzenle') veriYukle();
+      else if (hedef === 'istatistik') istatistikYukle();
+      else onizlemeAc();
     });
   });
+
+  // --- Önizleme (sadece panelde; önizleme ziyareti sayılmaz) ---
+  var CIHAZ_OLCU = { telefon: [390, 844], tablet: [820, 1180], bilgisayar: [1280, 800] };
+  var seciliCihaz = 'telefon';
+  function onizlemeCiz() {
+    var o = CIHAZ_OLCU[seciliCihaz], kutu = $('#cihaz-kutu'), cer = $('#onizleme');
+    var genislik = $('#sahne').clientWidth || o[0];
+    var olcek = Math.min(1, (genislik - 12) / o[0], (window.innerHeight - 190) / o[1]);
+    olcek = Math.max(olcek, .25);
+    cer.style.width = o[0] + 'px'; cer.style.height = o[1] + 'px';
+    cer.style.transform = 'scale(' + olcek + ')';
+    kutu.style.width = Math.round(o[0] * olcek) + 12 + 'px';
+    kutu.style.height = Math.round(o[1] * olcek) + 12 + 'px';
+    kutu.style.borderRadius = seciliCihaz === 'bilgisayar' ? '12px' : '22px';
+    $('#olcu').textContent = o[0] + ' × ' + o[1] + (olcek < 1 ? ' · %' + Math.round(olcek * 100) : '');
+  }
+  function onizlemeAc(yenile) {
+    var cer = $('#onizleme');
+    if (yenile || !cer.getAttribute('src')) cer.setAttribute('src', SITE + '?onizleme=1&t=' + Date.now());
+    onizlemeCiz();
+  }
+  document.querySelectorAll('[data-cihaz]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      seciliCihaz = b.dataset.cihaz;
+      document.querySelectorAll('[data-cihaz]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      onizlemeAc(true); // harita yeni boyuta göre yeniden ortalansın
+    });
+  });
+  $('#onizleme-yenile').addEventListener('click', function () { onizlemeAc(true); });
+  window.addEventListener('resize', function () { if (!$('#s-onizleme').classList.contains('gizli')) onizlemeCiz(); });
 
   // --- İstatistik ---
   var gun = 7;
