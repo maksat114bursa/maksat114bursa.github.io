@@ -10,7 +10,7 @@ const json = (veri, durum = 200, ek = {}) =>
 
 function corsBasliklari(istek, env) {
   const kaynakAdres = istek.headers.get('origin') || '';
-  const izinli = kaynakAdres === env.SITE || /^http:\/\/localhost(:\d+)?$/.test(kaynakAdres);
+  const izinli = [env.SITE, 'https://maksat114bursa.github.io', 'https://link.maksat114.com'].includes(kaynakAdres) || /^http:\/\/localhost(:\d+)?$/.test(kaynakAdres);
   return izinli ? { 'access-control-allow-origin': kaynakAdres, 'access-control-allow-methods': 'POST', 'access-control-allow-headers': 'content-type' } : {};
 }
 
@@ -129,7 +129,7 @@ export default {
     if (yol === '/panel') return new Response(PANEL, {
       headers: {
         'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-frame-options': 'DENY', 'referrer-policy': 'no-referrer',
-        'content-security-policy': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://maksat114bursa.github.io https://raw.githubusercontent.com; connect-src 'self'; frame-src https://maksat114bursa.github.io https://link.maksat114.com; frame-ancestors 'none'"
+        'content-security-policy': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://link.maksat114.com https://maksat114bursa.github.io https://raw.githubusercontent.com; connect-src 'self'; frame-src https://maksat114bursa.github.io https://link.maksat114.com; frame-ancestors 'none'"
       }
     });
     if (yol.startsWith('/api/')) {

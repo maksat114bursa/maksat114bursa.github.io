@@ -9,7 +9,7 @@ globs = ["**/*.html"]
 fallthrough = true
 
 [vars]
-SITE = "https://maksat114bursa.github.io"
+SITE = "https://link.maksat114.com"
 REPO = "maksat114bursa/maksat114bursa.github.io"
 DAL = "main"
 
