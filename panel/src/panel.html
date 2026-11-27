@@ -96,6 +96,7 @@
   .btn { border: 0; border-radius: 999px; padding: 12px 20px; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--kirmizi); color: #fff; }
   .btn:disabled { opacity: .5; cursor: default; }
   .btn.ikincil { background: transparent; border: 1px dashed rgba(248,248,246,.3); color: var(--metin); width: 100%; }
+  .kaydet-ic .btn.ikincil { width: auto; border-style: solid; }
   .foto { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
   .foto img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: var(--zemin); }
   .foto label { font-size: 13px; cursor: pointer; border: 1px solid rgba(248,248,246,.2); padding: 8px 12px; border-radius: 999px; }
@@ -172,6 +173,7 @@
         <button id="onizleme-yenile" aria-label="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>Yenile</button>
         <span class="olcu" id="olcu"></span>
       </div>
+      <p class="not gizli" id="taslak-notu" style="margin:-4px 2px 14px">Kaydedilmemiş değişikliklerinizle gösteriliyor. Ziyaretçiler bunu ancak "Kaydet ve yayınla"dan sonra görür.</p>
       <div class="sahne" id="sahne"><div class="cihaz-kutu" id="cihaz-kutu"><iframe id="onizleme" title="Sayfa önizlemesi" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe></div></div>
     </section>
 
@@ -180,6 +182,16 @@
       <h2>Başlık</h2>
       <div class="kart">
         <label class="alan"><span>Logonun altındaki yazı</span><input type="text" data-alan="altBaslik" maxlength="80"></label>
+      </div>
+
+      <h2>Üst düğmeler</h2>
+      <div class="kart">
+        <div class="izgara">
+          <label class="alan"><span>Sol düğme yazısı</span><input type="text" data-alan="dugmeler.mesajYazi" maxlength="30" placeholder="Mesaj at"></label>
+          <label class="alan"><span>Sol düğme linki (boşsa gizlenir)</span><input type="url" data-alan="dugmeler.mesajLink" maxlength="500" placeholder="https://wa.me/90..."></label>
+          <label class="alan"><span>Sağ düğme yazısı</span><input type="text" data-alan="dugmeler.webYazi" maxlength="30" placeholder="Web sitesi"></label>
+          <label class="alan"><span>Sağ düğme linki (boşsa gizlenir)</span><input type="url" data-alan="dugmeler.webLink" maxlength="500" placeholder="https://maksat114.com"></label>
+        </div>
       </div>
 
       <h2>Hesaplar</h2>
@@ -196,6 +208,7 @@
           <label class="alan"><span>Harita etiketi</span><input type="text" data-alan="konum.etiket" maxlength="50"></label>
           <label class="alan"><span>Metro yazısı</span><input type="text" data-alan="konum.metroYazi" maxlength="50"></label>
           <label class="alan"><span>Yürüme süresi</span><input type="text" data-alan="konum.metroSure" maxlength="30"></label>
+          <label class="alan"><span>Yol tarifi linki (boşsa koordinata göre)</span><input type="url" data-alan="konum.tarifLink" maxlength="500" placeholder="https://maps.app.goo.gl/..."></label>
           <label class="alan"><span>Koordinat (Google Haritalar'dan kopyalayın)</span><input type="text" id="koordinat" placeholder="40.21655, 28.93492"></label>
         </div>
         <p class="not">Koordinatı çok değiştirirseniz haritadaki metro yürüme yolu gizlenir; sadece iki işaret görünür.</p>
@@ -217,6 +230,7 @@
   <div class="kaydet-cubugu gizli" id="kaydet-cubugu">
     <div class="kaydet-ic">
       <p id="kaydet-durum">Kaydedilmemiş değişiklik var.</p>
+      <button class="btn ikincil" type="button" id="onizlemede-gor">Önizle</button>
       <button class="btn" id="kaydet">Kaydet ve yayınla</button>
     </div>
   </div>
@@ -262,10 +276,10 @@
   document.querySelectorAll('[data-sekme]').forEach(function (b) {
     b.addEventListener('click', function () {
       var hedef = b.dataset.sekme;
-      if (hedef !== 'duzenle' && degisti && !confirm('Kaydedilmemiş değişiklikler var. Yine de çıkılsın mı?')) return;
+      if (hedef === 'istatistik' && degisti && !confirm('Kaydedilmemiş değişiklikler var. Yine de çıkılsın mı?')) return;
       document.querySelectorAll('[data-sekme]').forEach(function (x) { x.setAttribute('aria-selected', x === b); });
       ['istatistik', 'duzenle', 'onizleme'].forEach(function (ad) { $('#s-' + ad).classList.toggle('gizli', hedef !== ad); });
-      if (hedef !== 'duzenle') { degisti = false; cubuk(); }
+      if (hedef === 'istatistik') { degisti = false; cubuk(); }
       if (hedef === 'duzenle') veriYukle();
       else if (hedef === 'istatistik') istatistikYukle();
       else onizlemeAc();
@@ -278,7 +292,7 @@
   function onizlemeCiz() {
     var o = CIHAZ_OLCU[seciliCihaz], kutu = $('#cihaz-kutu'), cer = $('#onizleme');
     var genislik = $('#sahne').clientWidth || o[0];
-    var olcek = Math.min(1, (genislik - 12) / o[0], (window.innerHeight - 190) / o[1]);
+    var olcek = Math.min(1, (genislik - 12) / o[0], (window.innerHeight - 190 - (degisti ? 84 : 0)) / o[1]);
     olcek = Math.max(olcek, .25);
     cer.style.width = o[0] + 'px'; cer.style.height = o[1] + 'px';
     cer.style.transform = 'scale(' + olcek + ')';
@@ -287,8 +301,18 @@
     kutu.style.borderRadius = seciliCihaz === 'bilgisayar' ? '12px' : '22px';
     $('#olcu').textContent = o[0] + ' × ' + o[1] + (olcek < 1 ? ' · %' + Math.round(olcek * 100) : '');
   }
+  function taslakGonder() {
+    var cer = $('#onizleme');
+    if (degisti && veri && cer.contentWindow) cer.contentWindow.postMessage({ tur: 'onizleme-veri', veri: veri }, new URL(SITE).origin);
+    $('#taslak-notu').classList.toggle('gizli', !degisti);
+  }
+  $('#onizleme').addEventListener('load', taslakGonder);
+  window.addEventListener('message', function (e) {
+    if (e.origin === new URL(SITE).origin && e.data && e.data.tur === 'onizleme-hazir') taslakGonder();
+  });
   function onizlemeAc(yenile) {
     var cer = $('#onizleme');
+    if (!yenile && cer.getAttribute('src')) taslakGonder();
     if (yenile || !cer.getAttribute('src')) cer.setAttribute('src', SITE + '?onizleme=1&t=' + Date.now());
     onizlemeCiz();
   }
@@ -300,6 +324,7 @@
     });
   });
   $('#onizleme-yenile').addEventListener('click', function () { onizlemeAc(true); });
+  $('#onizlemede-gor').addEventListener('click', function () { document.querySelector('[data-sekme=onizleme]').click(); onizlemeAc(true); });
   window.addEventListener('resize', function () { if (!$('#s-onizleme').classList.contains('gizli')) onizlemeCiz(); });
 
   // --- İstatistik ---
@@ -311,7 +336,7 @@
     istatistikYukle();
   });
   function olayAdi(o) {
-    var t = { 'yol-tarifi': 'Yol tarifi al', 'youtube-tum': "Tüm videolar YouTube'da" };
+    var t = { 'yol-tarifi': 'Yol tarifi al', 'youtube-tum': "Tüm videolar YouTube'da", 'mesaj-at': 'Mesaj at (WhatsApp)', 'web-sitesi': 'Web sitesi' };
     if (t[o]) return t[o];
     if (o.indexOf('hesap:') === 0) { var k = o.slice(6); var tr = TURLER.find(function (x) { return x[0] === k; }); return (tr ? tr[1] : k) + ' butonu'; }
     if (o.indexOf('takip:') === 0) return 'Takip: @' + o.slice(6);

@@ -71,3 +71,20 @@ test('istemci: anahtar tanımlı değilse başlıklar yok sayılır', () => {
   const r = istemci(istek({ 'x-vekil': '', 'x-istemci-ip': '1.2.3.4', 'cf-connecting-ip': '9.9.9.9' }, {}), undefined);
   assert.equal(r.ip, '9.9.9.9');
 });
+
+test('tarifLink https değilse reddedilir, boşsa sorun yok', () => {
+  const v = structuredClone(ornek); v.konum.tarifLink = 'javascript:alert(1)';
+  assert.ok(veriDogrula(v).some((e) => e.includes('yol tarifi')));
+  v.konum.tarifLink = ''; assert.deepEqual(veriDogrula(v), []);
+  v.konum.tarifLink = 'https://maps.app.goo.gl/PZEqEVYzg2M41p9m7?g_st=aw'; assert.deepEqual(veriDogrula(v), []);
+});
+
+test('üst düğmeler: link https olmalı, boş link düğmeyi gizler (hata değil)', () => {
+  const v = structuredClone(ornek);
+  assert.equal(v.dugmeler.mesajLink, 'https://wa.me/905533368755');
+  v.dugmeler.webLink = 'http://maksat114.com';
+  assert.ok(veriDogrula(v).some((e) => e.includes('web sitesi')));
+  v.dugmeler.webLink = ''; assert.deepEqual(veriDogrula(v), []);
+  v.dugmeler.mesajYazi = 'x'.repeat(40);
+  assert.ok(veriDogrula(v).some((e) => e.includes('mesaj')));
+});

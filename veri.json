@@ -1,5 +1,11 @@
 {
   "altBaslik": "Gençlik Merkezi · Bursa",
+  "dugmeler": {
+    "mesajYazi": "Mesaj at",
+    "mesajLink": "https://wa.me/905533368755",
+    "webYazi": "Web sitesi",
+    "webLink": "https://maksat114.com"
+  },
   "hesaplar": [
     {
       "tur": "instagram",
@@ -45,7 +51,8 @@
     "enlem": 40.21655,
     "boylam": 28.93492,
     "metroYazi": "BursaRay Altınşehir",
-    "metroSure": "3 dk yürüme"
+    "metroSure": "3 dk yürüme",
+    "tarifLink": "https://maps.app.goo.gl/PZEqEVYzg2M41p9m7?g_st=aw"
   },
   "takip": [
     {
