@@ -1,6 +1,6 @@
 import PANEL from './panel.html';
 import { veriDogrula } from './dogrula.js';
-import { cihaz, kaynak, olayTemizle, imzala, imzaDogrula, ozet, istemci } from './yardim.js';
+import { cihaz, kaynak, olayTemizle, imzala, imzaDogrula, ozet, istemci, ziyaretciKimligi } from './yardim.js';
 
 const GUN = 86400000;
 const trGun = (t = Date.now()) => new Date(t + 3 * 3600000).toISOString().slice(0, 10); // Türkiye saati (UTC+3)
@@ -27,7 +27,7 @@ async function olayKaydet(istek, env, ctx) {
   const { ip, ulke, sehir } = istemci(istek, env.VEKIL_ANAHTAR);
   const gun = trGun();
   // Günlük tekil ziyaretçi: IP saklanmaz, yalnızca gün + gizli tuzla tek yönlü özet
-  const ziyaretci = await ozet(`${ip}|${ua}|${gun}|${env.OTURUM_ANAHTAR}`);
+  const ziyaretci = await ziyaretciKimligi(govde.z, ip, ua, env.OTURUM_ANAHTAR);
   ctx.waitUntil(env.DB.prepare(
     'INSERT INTO olaylar (zaman, gun, olay, ziyaretci, cihaz, kaynak, ulke, sehir) VALUES (?,?,?,?,?,?,?,?)'
   ).bind(Date.now(), gun, olay, ziyaretci, cihaz(ua), kaynak(ua, String(govde.r || '')), ulke, sehir).run());
@@ -70,10 +70,10 @@ async function istatistik(url, env) {
     env.DB.prepare(`SELECT SUM(olay='ziyaret') AS ziyaret, COUNT(DISTINCT CASE WHEN olay='ziyaret' THEN ziyaretci END) AS tekil, SUM(olay!='ziyaret') AS tiklama FROM olaylar WHERE gun >= ?`).bind(bas).first(),
     q(`SELECT gun, SUM(olay='ziyaret') AS ziyaret, COUNT(DISTINCT CASE WHEN olay='ziyaret' THEN ziyaretci END) AS tekil, SUM(olay!='ziyaret') AS tiklama FROM olaylar WHERE gun >= ? GROUP BY gun ORDER BY gun`),
     q(`SELECT olay, COUNT(*) AS n, COUNT(DISTINCT ziyaretci) AS kisi FROM olaylar WHERE gun >= ? AND olay != 'ziyaret' GROUP BY olay ORDER BY n DESC`),
-    q(`SELECT cihaz AS ad, COUNT(*) AS n FROM olaylar WHERE gun >= ? AND olay='ziyaret' GROUP BY cihaz ORDER BY n DESC`),
-    q(`SELECT kaynak AS ad, COUNT(*) AS n FROM olaylar WHERE gun >= ? AND olay='ziyaret' GROUP BY kaynak ORDER BY n DESC LIMIT 8`),
-    q(`SELECT sehir AS ad, COUNT(*) AS n FROM olaylar WHERE gun >= ? AND olay='ziyaret' AND sehir IS NOT NULL GROUP BY sehir ORDER BY n DESC LIMIT 10`),
-    q(`SELECT ulke AS ad, COUNT(*) AS n FROM olaylar WHERE gun >= ? AND olay='ziyaret' AND ulke IS NOT NULL GROUP BY ulke ORDER BY n DESC LIMIT 8`)
+    q(`SELECT cihaz AS ad, COUNT(DISTINCT ziyaretci) AS n FROM olaylar WHERE gun >= ? AND olay='ziyaret' GROUP BY cihaz ORDER BY n DESC`),
+    q(`SELECT kaynak AS ad, COUNT(DISTINCT ziyaretci) AS n FROM olaylar WHERE gun >= ? AND olay='ziyaret' GROUP BY kaynak ORDER BY n DESC LIMIT 8`),
+    q(`SELECT sehir AS ad, COUNT(DISTINCT ziyaretci) AS n FROM olaylar WHERE gun >= ? AND olay='ziyaret' AND sehir IS NOT NULL GROUP BY sehir ORDER BY n DESC LIMIT 10`),
+    q(`SELECT ulke AS ad, COUNT(DISTINCT ziyaretci) AS n FROM olaylar WHERE gun >= ? AND olay='ziyaret' AND ulke IS NOT NULL GROUP BY ulke ORDER BY n DESC LIMIT 8`)
   ]);
   return json({ gunSayisi, bas, bugun: trGun(), toplam, gunluk, olaylar, cihazlar, kaynaklar, sehirler, ulkeler });
 }

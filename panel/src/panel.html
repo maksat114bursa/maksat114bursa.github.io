@@ -145,23 +145,23 @@
         <button data-gun="90">90 gün</button>
       </div>
       <div class="rakamlar">
-        <div class="kart rakam"><small>Sayfa görüntüleme</small><b id="r-ziyaret">–</b><em>sayfanın kaç kez açıldığı</em></div>
-        <div class="kart rakam"><small>Ziyaretçi</small><b id="r-tekil">–</b><em>günlük farklı kişi (yaklaşık)</em></div>
+        <div class="kart rakam"><small>Kişi</small><b id="r-tekil">–</b><em>siteye giren farklı kişi (aynı kişi 1 kez sayılır)</em></div>
+        <div class="kart rakam"><small>Sayfa açılma</small><b id="r-ziyaret">–</b><em>sayfanın toplam kaç kez açıldığı</em></div>
         <div class="kart rakam"><small>Tıklama</small><b id="r-tiklama">–</b><em>butonlara toplam</em></div>
         <div class="kart rakam"><small>Tıklama oranı</small><b id="r-oran">–</b><em>tıklama / görüntüleme</em></div>
       </div>
 
-      <h2>Günlük görüntüleme</h2>
+      <h2>Günlük kişi sayısı</h2>
       <div class="kart"><div class="grafik" id="grafik"></div><div class="grafik-alt" id="grafik-alt"></div></div>
 
       <h2>Neye tıklandı</h2>
       <div class="kart"><div class="liste" id="l-olay"></div></div>
 
       <div class="iki">
-        <div><h2>Nereden geldi</h2><div class="kart"><div class="liste" id="l-kaynak"></div></div></div>
-        <div><h2>Cihaz</h2><div class="kart"><div class="liste" id="l-cihaz"></div></div></div>
-        <div><h2>Şehir</h2><div class="kart"><div class="liste" id="l-sehir"></div></div></div>
-        <div><h2>Ülke</h2><div class="kart"><div class="liste" id="l-ulke"></div></div></div>
+        <div><h2>Nereden geldi · kişi</h2><div class="kart"><div class="liste" id="l-kaynak"></div></div></div>
+        <div><h2>Cihaz · kişi</h2><div class="kart"><div class="liste" id="l-cihaz"></div></div></div>
+        <div><h2>Şehir · kişi</h2><div class="kart"><div class="liste" id="l-sehir"></div></div></div>
+        <div><h2>Ülke · kişi</h2><div class="kart"><div class="liste" id="l-ulke"></div></div></div>
       </div>
     </section>
 
@@ -362,10 +362,10 @@
       var harita = {}; (d.gunluk || []).forEach(function (g) { harita[g.gun] = g; });
       var gunler = [], b = new Date(d.bas + 'T12:00:00Z');
       for (var i = 0; i < d.gunSayisi; i++) { var g = new Date(b.getTime() + i * 864e5).toISOString().slice(0, 10); gunler.push(harita[g] || { gun: g, ziyaret: 0, tekil: 0, tiklama: 0 }); }
-      var en = Math.max(1, Math.max.apply(null, gunler.map(function (g) { return g.ziyaret; })));
+      var en = Math.max(1, Math.max.apply(null, gunler.map(function (g) { return g.tekil; })));
       var tarih = function (g) { var p = g.split('-'); return +p[2] + ' ' + ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'][+p[1] - 1]; };
       $('#grafik').innerHTML = gunler.map(function (g) {
-        return '<div class="sutun"><div class="ipucu">' + tarih(g.gun) + ': ' + sayi(g.ziyaret) + ' görüntüleme · ' + sayi(g.tekil) + ' kişi · ' + sayi(g.tiklama) + ' tıklama</div><div class="cubuk' + (g.ziyaret ? '' : ' bos') + '" style="height:' + (g.ziyaret / en * 100) + '%"></div></div>';
+        return '<div class="sutun"><div class="ipucu">' + tarih(g.gun) + ': ' + sayi(g.tekil) + ' kişi · ' + sayi(g.ziyaret) + ' açılma · ' + sayi(g.tiklama) + ' tıklama</div><div class="cubuk' + (g.tekil ? '' : ' bos') + '" style="height:' + (g.tekil / en * 100) + '%"></div></div>';
       }).join('');
       $('#grafik-alt').innerHTML = '<span>' + tarih(gunler[0].gun) + '</span><span>' + tarih(gunler[gunler.length - 1].gun) + '</span>';
       liste('#l-olay', (d.olaylar || []).map(function (o) { return { ad: o.olay, n: o.n, kisi: o.kisi }; }), olayAdi, function (s) { return '<small>' + sayi(s.kisi) + ' kişi</small>'; });

@@ -51,6 +51,13 @@ export async function ozet(metin) {
   return b64(await crypto.subtle.digest('SHA-256', enc.encode(metin))).slice(0, 22);
 }
 
+// Bir kişi = bir ziyaretçi: tarayıcının rastgele, anonim kimliği (gizli anahtarla özetlenir, kendisi saklanmaz).
+// Kimlik yoksa (gizli sekme vb.) IP + cihaz bilgisinden, gün bilgisi olmadan özet çıkarılır. IP hiçbir zaman saklanmaz.
+export async function ziyaretciKimligi(z, ip, ua, anahtar) {
+  if (typeof z === 'string' && /^[a-z0-9]{16,40}$/i.test(z)) return ozet(`z|${z}|${anahtar}`);
+  return ozet(`ip|${ip}|${ua}|${anahtar}`);
+}
+
 // Netlify vekilinden gelen isteklerde gerçek ziyaretçi bilgisi başlıklarda taşınır.
 // Başlıklara yalnızca gizli vekil anahtarı doğruysa güvenilir.
 export function istemci(istek, vekilAnahtar) {

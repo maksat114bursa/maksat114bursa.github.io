@@ -404,11 +404,23 @@ function haritaKur(konum) {
   var VARSAYILAN = [40.21655, 28.93492];
 
   // --- Sayaç: IP/çerez yok, sadece olay adı ---
+  // Anonim tarayıcı kimliği: aynı kişi kaç kez gelirse gelsin 1 kişi sayılsın (kişisel bilgi içermez)
+  function tarayiciKimligi() {
+    try {
+      var z = localStorage.getItem('m114z');
+      if (!z || !/^[a-z0-9]{24}$/.test(z)) {
+        var b = new Uint8Array(12); crypto.getRandomValues(b);
+        z = Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+        localStorage.setItem('m114z', z);
+      }
+      return z;
+    } catch (e) { return ''; }
+  }
   function olay(ad) {
     if (SAYAC.indexOf('http') !== 0) return;
     if (/[?&]onizleme=1/.test(location.search)) return; // panel önizlemesi sayılmaz
     try {
-      var govde = JSON.stringify({ o: String(ad).slice(0, 80), r: document.referrer.slice(0, 200) });
+      var govde = JSON.stringify({ o: String(ad).slice(0, 80), r: document.referrer.slice(0, 200), z: tarayiciKimligi() });
       if (navigator.sendBeacon) navigator.sendBeacon(SAYAC + '/o', new Blob([govde], { type: 'text/plain' }));
       else fetch(SAYAC + '/o', { method: 'POST', body: govde, keepalive: true, mode: 'no-cors' });
     } catch (e) {}

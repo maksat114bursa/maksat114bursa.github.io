@@ -88,3 +88,15 @@ test('üst düğmeler: link https olmalı, boş link düğmeyi gizler (hata değ
   v.dugmeler.mesajYazi = 'x'.repeat(40);
   assert.ok(veriDogrula(v).some((e) => e.includes('mesaj')));
 });
+
+test('ziyaretçi kimliği: aynı tarayıcı her gün ve IP değişse de aynı kişi sayılır', async () => {
+  const { ziyaretciKimligi } = await import('../src/yardim.js');
+  const z = 'a1b2c3d4e5f6a7b8c9d0e1f2';
+  const a = await ziyaretciKimligi(z, '1.1.1.1', 'UA', 'gizli');
+  const b = await ziyaretciKimligi(z, '2.2.2.2', 'UA', 'gizli');
+  assert.equal(a, b);
+  assert.notEqual(a, await ziyaretciKimligi('ffffffffffffffffffffffff', '1.1.1.1', 'UA', 'gizli'));
+  // tarayıcı kimliği yoksa/bozuksa IP+cihaz ile (gün bilgisi olmadan) sayılır
+  assert.equal(await ziyaretciKimligi('', '1.1.1.1', 'UA', 'gizli'), await ziyaretciKimligi('<script>', '1.1.1.1', 'UA', 'gizli'));
+  assert.ok(!a.includes(z));
+});
